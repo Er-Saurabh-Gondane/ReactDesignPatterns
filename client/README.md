@@ -1,8 +1,8 @@
 # React Design Patterns
 
-A learning project focused on understanding and implementing common **React Design Patterns** using reusable components, props, destructuring, and component composition.
+A learning project focused on understanding and implementing common **React Design Patterns** using reusable components, component composition, props, destructuring, and dynamic rendering.
 
-This project is part of my React learning journey and currently covers the **Split Screen Pattern** and **Regular List Pattern**.
+This project is part of my React learning journey. The current implementation covers **Split Screen**, **Regular List**, and **Modal/Composition** patterns.
 
 ---
 
@@ -23,25 +23,7 @@ The **Split Screen Pattern** is used to divide a page or section into multiple a
 
 The `SplitScreen` component receives components through props and renders them in separate sections.
 
-#### Implementation
-
-```jsx
-export const SplitScreen = ({ left: Left, right: Right }) => {
-  return (
-    <div className="flex">
-      <div className="flex-1">
-        <Left />
-      </div>
-
-      <div className="flex-[4]">
-        <Right />
-      </div>
-    </div>
-  );
-};
-```
-
-### Key Concepts
+#### Key Concepts
 
 * Component composition
 * Passing components as props
@@ -67,7 +49,7 @@ Instead of creating separate list logic for every type of data, the same `Regula
 />
 ```
 
-Another component can display the same data differently:
+The same list can use another component to display the data differently:
 
 ```jsx
 <RegularList
@@ -77,7 +59,7 @@ Another component can display the same data differently:
 />
 ```
 
-The same pattern can also be used with products:
+The pattern can also be reused with other data such as products:
 
 ```jsx
 <RegularList
@@ -87,7 +69,7 @@ The same pattern can also be used with products:
 />
 ```
 
-### Key Concepts
+#### Key Concepts
 
 * Reusable components
 * Component composition
@@ -99,21 +81,101 @@ The same pattern can also be used with products:
 
 ---
 
+### 3. Modal / Composition Pattern
+
+The **Modal Pattern** is used to display content in an overlay on top of the current page.
+
+In this implementation, the modal uses the React `children` prop to make the modal reusable. Any component or JSX content can be passed inside the `<Modal>` component.
+
+#### Example
+
+```jsx
+<Modal>
+  <LargePerson person={people[0]} />
+</Modal>
+```
+
+The content passed between the opening and closing `<Modal>` tags becomes the `children` prop.
+
+Inside the `Modal` component:
+
+```jsx
+export const Modal = ({ children }) => {
+  // ...
+
+  return (
+    <div>
+      {/* Modal UI */}
+
+      {children}
+
+      {/* Close button */}
+    </div>
+  );
+};
+```
+
+This allows the same modal component to display different content without changing the modal implementation.
+
+#### Key Concepts
+
+* `children` prop
+* Component composition
+* Conditional rendering
+* `useState`
+* Event handling
+* Event propagation
+* Reusable UI components
+* Modal overlay implementation
+
+#### Modal Behavior
+
+The modal follows this flow:
+
+```text
+Show Modal Button
+        ↓
+setShouldShow(true)
+        ↓
+Modal appears
+        ↓
+Render {children}
+        ↓
+Click outside → Close Modal
+Click inside  → Keep Modal Open
+        ↓
+Hide Modal → setShouldShow(false)
+```
+
+The modal also uses:
+
+```jsx
+onClick={(e) => e.stopPropagation()}
+```
+
+to prevent clicks inside the modal from triggering the background overlay's click event.
+
+---
+
 ## 🧠 React Concepts Practiced
 
 Through this project, I am practicing:
 
 * Functional Components
 * Props
+* `children` Props
 * Component Composition
 * Destructuring
 * Array `.map()`
 * Dynamic Props
 * Passing Components as Props
 * Named Exports
+* Conditional Rendering
+* `useState`
+* Event Handling
+* Event Propagation
 * Reusable Components
 * React Design Patterns
-* Tailwind CSS
 
 ---
 
@@ -129,11 +191,12 @@ src/
 ├── LargePerson.jsx
 ├── SmallPerson.jsx
 ├── RegularList.jsx
+├── Modal.jsx
 ├── App.css
 └── index.css
 ```
 
-> Folder organization may be improved as the project grows and more React patterns are added.
+> The folder structure may be improved as the project grows and more React patterns are added.
 
 ---
 
@@ -174,46 +237,21 @@ npm install
 npm run dev
 ```
 
-The application will be available on the local development server provided by Vite.
+The application will run on the local development server provided by Vite.
 
 ---
 
 ## 📌 Learning Progress
 
-| Design Pattern            | Status         |
-| ------------------------- | -------------- |
-| Split Screen Pattern      | ✅ Completed    |
-| Regular List Pattern      | ✅ Completed    |
-| Additional React Patterns | 🔄 In Progress |
+| Design Pattern              | Status         |
+| --------------------------- | -------------- |
+| Split Screen Pattern        | ✅ Completed    |
+| Regular List Pattern        | ✅ Completed    |
+| Modal / Composition Pattern | ✅ Completed    |
+| Additional React Patterns   | 🔄 In Progress |
 
 ---
 
 ## 🎯 Learning Goals
 
-The main goal of this project is to understand how React can be used to build **reusable, flexible, and maintainable components**.
-
-I am focusing on understanding the concepts behind each pattern rather than simply copying implementations.
-
-Future learning areas include:
-
-* Container & Presentational Pattern
-* Controlled & Uncontrolled Components
-* Compound Components
-* Custom Hooks
-* Higher-Order Components
-* Provider Pattern
-* State Reducer Pattern
-
----
-
-## 👨‍💻 Author
-
-**Saurabh Gondane**
-
-M.Tech CSE | React | Java | Spring Boot | MERN Stack
-
----
-
-## ⭐ Purpose
-
-This repository is maintained as part of my **React learning journey** and is intended to document my progress in understanding React design patterns and reusable component architecture.
+The main goal of this proje
