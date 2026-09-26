@@ -3,6 +3,7 @@ import { SplitScreen } from './SplitScreen';
 import {LargePerson} from './LargePerson';
 import { SmallPerson } from './SmallPerson';
 import { RegularList } from './RegularList';
+import { Modal } from './Modal';
 
 
 const products = [
@@ -163,6 +164,9 @@ function App() {
             itemComponent={SmallPerson}
           />
        </div>
+       <Modal>
+         <LargePerson person={people[0]}/>
+       </Modal>
     </div>
   )
 }
